@@ -1,7 +1,7 @@
 
 package co.udea.edu.proyectointegrador.gr11.parqueaderoapp.presentacion.swing;
 
-import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.presentacion.controller.InicioSesionController;
+import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.controller.InicioSesionController;
 import javax.swing.JOptionPane;
 
 /**

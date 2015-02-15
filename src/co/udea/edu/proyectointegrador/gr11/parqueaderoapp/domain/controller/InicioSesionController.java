@@ -1,5 +1,5 @@
 
-package co.udea.edu.proyectointegrador.gr11.parqueaderoapp.presentacion.controller;
+package co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.controller;
 
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.data.dao.implement.OperarioUserDaoImplement;
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.data.daos.OperarioUserDao;
