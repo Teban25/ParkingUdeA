@@ -2,14 +2,14 @@
 <!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
 <hibernate-reverse-engineering>
   <schema-selection match-catalog="parqueadero"/>
-  <table-filter match-name="Tipo_Usuario"/>
-  <table-filter match-name="Tipo_Operario_User"/>
-  <table-filter match-name="Usuario_Vehiculo"/>
-  <table-filter match-name="Usuario"/>
+  <table-filter match-name="TipoVehiculo"/>
+  <table-filter match-name="OperarioUser"/>
+  <table-filter match-name="TipoIdentificacion"/>
+  <table-filter match-name="UsuarioVehiculo"/>
   <table-filter match-name="Ingreso"/>
-  <table-filter match-name="Operario_User"/>
   <table-filter match-name="Operario"/>
-  <table-filter match-name="Tipo_Vehiculo"/>
-  <table-filter match-name="Tipo_Identificacion"/>
+  <table-filter match-name="Usuario"/>
+  <table-filter match-name="TipoOperarioUser"/>
+  <table-filter match-name="TipoUsuario"/>
   <table-filter match-name="Vehiculo"/>
 </hibernate-reverse-engineering>

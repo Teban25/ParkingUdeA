@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/02/2015 12:13:54 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.Usuario" table="Usuario" catalog="parqueadero" optimistic-lock="version">
+        <id name="identificacion" type="string">
+            <column name="Identificacion" length="100" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="tipoIdentificacion" class="co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.TipoIdentificacion" fetch="select">
+            <column name="IdTipoIdentificacion" not-null="true" />
+        </many-to-one>
+        <many-to-one name="tipoUsuario" class="co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.TipoUsuario" fetch="select">
+            <column name="IdTipoUsuario" not-null="true" />
+        </many-to-one>
+        <property name="nombre" type="string">
+            <column name="Nombre" length="100" not-null="true" />
+        </property>
+        <property name="apellido" type="string">
+            <column name="Apellido" length="100" not-null="true" />
+        </property>
+        <property name="direccion" type="string">
+            <column name="Direccion" length="100" />
+        </property>
+        <property name="telefono" type="string">
+            <column name="Telefono" length="100" />
+        </property>
+        <property name="genero" type="string">
+            <column name="Genero" length="100" />
+        </property>
+        <set name="usuarioVehiculos" table="UsuarioVehiculo" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="UsuarioIdentificacion" length="100" not-null="true" />
+            </key>
+            <one-to-many class="co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.UsuarioVehiculo" />
+        </set>
+    </class>
+</hibernate-mapping>

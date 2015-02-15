@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/02/2015 12:13:54 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.OperarioUser" table="OperarioUser" catalog="parqueadero" optimistic-lock="version">
+        <id name="nombreUsuarioOperario" type="string">
+            <column name="NombreUsuarioOperario" length="100" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="tipoOperarioUser" class="co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.TipoOperarioUser" fetch="select">
+            <column name="IdTipoOperarioUser" not-null="true" />
+        </many-to-one>
+        <property name="password" type="string">
+            <column name="Password" length="100" not-null="true" />
+        </property>
+        <set name="ingresos" table="Ingreso" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="NombreUsuarioOperario" length="100" not-null="true" />
+            </key>
+            <one-to-many class="co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.Ingreso" />
+        </set>
+        <set name="operarios" table="Operario" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="NombreUsuarioOperario" length="100" not-null="true" />
+            </key>
+            <one-to-many class="co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.Operario" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -9,5 +9,15 @@
     <property name="hibernate.show_sql">true</property>
     <property name="hibernate.query.factory_class">org.hibernate.hql.internal.classic.ClassicQueryTranslatorFactory</property>
     <property name="hibernate.current_session_context_class">thread</property>
+    <mapping resource="co/udea/edu/proyectointegrador/gr11/parqueaderoapp/domain/hibernatemapping/TipoVehiculo.hbm.xml"/>
+    <mapping resource="co/udea/edu/proyectointegrador/gr11/parqueaderoapp/domain/hibernatemapping/Operario.hbm.xml"/>
+    <mapping resource="co/udea/edu/proyectointegrador/gr11/parqueaderoapp/domain/hibernatemapping/UsuarioVehiculo.hbm.xml"/>
+    <mapping resource="co/udea/edu/proyectointegrador/gr11/parqueaderoapp/domain/hibernatemapping/TipoUsuario.hbm.xml"/>
+    <mapping resource="co/udea/edu/proyectointegrador/gr11/parqueaderoapp/domain/hibernatemapping/TipoOperarioUser.hbm.xml"/>
+    <mapping resource="co/udea/edu/proyectointegrador/gr11/parqueaderoapp/domain/hibernatemapping/Vehiculo.hbm.xml"/>
+    <mapping resource="co/udea/edu/proyectointegrador/gr11/parqueaderoapp/domain/hibernatemapping/OperarioUser.hbm.xml"/>
+    <mapping resource="co/udea/edu/proyectointegrador/gr11/parqueaderoapp/domain/hibernatemapping/Usuario.hbm.xml"/>
+    <mapping resource="co/udea/edu/proyectointegrador/gr11/parqueaderoapp/domain/hibernatemapping/Ingreso.hbm.xml"/>
+    <mapping resource="co/udea/edu/proyectointegrador/gr11/parqueaderoapp/domain/hibernatemapping/TipoIdentificacion.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

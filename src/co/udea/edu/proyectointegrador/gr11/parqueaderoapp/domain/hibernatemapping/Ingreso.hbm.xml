@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/02/2015 12:13:54 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.Ingreso" table="Ingreso" catalog="parqueadero" optimistic-lock="version">
+        <composite-id name="id" class="co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.IngresoId">
+            <key-property name="fecha" type="timestamp">
+                <column name="Fecha" length="19" />
+            </key-property>
+            <key-property name="placa" type="string">
+                <column name="Placa" length="50" />
+            </key-property>
+            <key-property name="usuarioIdentificacion" type="string">
+                <column name="UsuarioIdentificacion" length="100" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="operarioUser" class="co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.OperarioUser" fetch="select">
+            <column name="NombreUsuarioOperario" length="100" not-null="true" />
+        </many-to-one>
+        <many-to-one name="usuarioVehiculo" class="co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.UsuarioVehiculo" update="false" insert="false"
+        fetch="select">
+            <column name="Placa" length="50" not-null="true" />
+            <column name="UsuarioIdentificacion" length="100" not-null="true" />
+        </many-to-one>
+        <property name="estado" type="boolean">
+            <column name="Estado" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

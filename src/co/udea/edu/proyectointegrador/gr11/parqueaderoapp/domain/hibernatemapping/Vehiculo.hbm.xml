@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 15/02/2015 12:13:54 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.Vehiculo" table="Vehiculo" catalog="parqueadero" optimistic-lock="version">
+        <id name="placa" type="string">
+            <column name="Placa" length="50" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="tipoVehiculo" class="co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.TipoVehiculo" fetch="select">
+            <column name="IdTipoVehiculo" not-null="true" />
+        </many-to-one>
+        <property name="marca" type="string">
+            <column name="Marca" length="100" not-null="true" />
+        </property>
+        <property name="color" type="string">
+            <column name="Color" length="50" />
+        </property>
+        <property name="modelo" type="string">
+            <column name="Modelo" length="50" not-null="true" />
+        </property>
+        <property name="fechaRegistro" type="timestamp">
+            <column name="FechaRegistro" length="19" not-null="true" />
+        </property>
+        <set name="usuarioVehiculos" table="UsuarioVehiculo" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="Placa" length="50" not-null="true" />
+            </key>
+            <one-to-many class="co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.UsuarioVehiculo" />
+        </set>
+    </class>
+</hibernate-mapping>
