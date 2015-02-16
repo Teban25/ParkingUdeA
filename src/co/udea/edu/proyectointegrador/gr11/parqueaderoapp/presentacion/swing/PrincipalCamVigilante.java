@@ -69,10 +69,10 @@ public class PrincipalCamVigilante extends javax.swing.JFrame {
         JMICerrarSesion = new javax.swing.JMenuItem();
         jMISalir = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        jMIRegistrarVehiculo = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBounds(new java.awt.Rectangle(500, 0, 0, 0));
+        setBounds(new java.awt.Rectangle(350, 0, 0, 0));
         setResizable(false);
 
         jPanelCamara.setMaximumSize(new java.awt.Dimension(320, 240));
@@ -162,8 +162,14 @@ public class PrincipalCamVigilante extends javax.swing.JFrame {
 
         jMenu2.setText("Opciones");
 
-        jMenuItem1.setText("Registrar vehiculo");
-        jMenu2.add(jMenuItem1);
+        jMIRegistrarVehiculo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/motocicleta_opt.jpg"))); // NOI18N
+        jMIRegistrarVehiculo.setText("Registrar vehiculo");
+        jMIRegistrarVehiculo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIRegistrarVehiculoActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMIRegistrarVehiculo);
 
         jMenuBar1.add(jMenu2);
 
@@ -288,6 +294,11 @@ public class PrincipalCamVigilante extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTFPlacaResultActionPerformed
 
+    private void jMIRegistrarVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIRegistrarVehiculoActionPerformed
+        RegistrarVehiculo nuevoVehiculo=new RegistrarVehiculo();
+        nuevoVehiculo.setVisible(true);
+    }//GEN-LAST:event_jMIRegistrarVehiculoActionPerformed
+
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -332,11 +343,11 @@ public class PrincipalCamVigilante extends javax.swing.JFrame {
     private javax.swing.JLabel jLPlacaResult;
     private javax.swing.JLabel jLTip;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenuItem jMIRegistrarVehiculo;
     private javax.swing.JMenuItem jMISalir;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPFotoPlaca;
     private javax.swing.JPanel jPanelCamara;
     private javax.swing.JTextField jTFPlacaResult;
