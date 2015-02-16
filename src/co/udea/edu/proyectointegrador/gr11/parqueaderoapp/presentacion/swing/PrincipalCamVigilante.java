@@ -3,6 +3,7 @@ package co.udea.edu.proyectointegrador.gr11.parqueaderoapp.presentacion.swing;
 
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.io.File;
@@ -19,7 +20,7 @@ import javax.swing.JOptionPane;
  *
  * @author davide.gomez
  */
-public class PrincipalCam extends javax.swing.JFrame {
+public class PrincipalCamVigilante extends javax.swing.JFrame {
     Webcam webcam;
     WebcamPanel panel;
     String tip;
@@ -27,8 +28,9 @@ public class PrincipalCam extends javax.swing.JFrame {
     ImageIcon icon;
     Icon icono;
     
-    public PrincipalCam() {
+    public PrincipalCamVigilante() {
         initComponents();
+        this.getContentPane().setBackground(new Color(204,204,204));
         webcam = Webcam.getDefault();
         webcam.setViewSize(new Dimension(320,240));
         lFotoPlaca=new JLabel();
@@ -59,8 +61,11 @@ public class PrincipalCam extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         JMICerrarSesion = new javax.swing.JMenuItem();
         jMISalir = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBounds(new java.awt.Rectangle(500, 0, 0, 0));
         setResizable(false);
 
         jPanelCamara.setMaximumSize(new java.awt.Dimension(320, 240));
@@ -111,6 +116,7 @@ public class PrincipalCam extends javax.swing.JFrame {
 
         jMenu1.setText("Archivo");
 
+        JMICerrarSesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logoOut.png"))); // NOI18N
         JMICerrarSesion.setText("Cerrar sesión");
         JMICerrarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -119,6 +125,7 @@ public class PrincipalCam extends javax.swing.JFrame {
         });
         jMenu1.add(JMICerrarSesion);
 
+        jMISalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/liberar-icono-6437-16.png"))); // NOI18N
         jMISalir.setText("Salir");
         jMISalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,6 +135,13 @@ public class PrincipalCam extends javax.swing.JFrame {
         jMenu1.add(jMISalir);
 
         jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Opciones");
+
+        jMenuItem1.setText("Registrar vehiculo");
+        jMenu2.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
 
@@ -227,7 +241,7 @@ public class PrincipalCam extends javax.swing.JFrame {
             try {
                 ImageIO.write(webcam.getImage(), "JPG", new File("./images/"+tip+".jpg"));
             } catch (IOException ex) {
-                Logger.getLogger(PrincipalCam.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PrincipalCamVigilante.class.getName()).log(Level.SEVERE, null, ex);
             }
             icon = new ImageIcon("./images/"+tip+".jpg");
             icono = new ImageIcon(icon.getImage().
@@ -257,21 +271,23 @@ public class PrincipalCam extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PrincipalCam.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PrincipalCamVigilante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PrincipalCam.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PrincipalCamVigilante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PrincipalCam.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PrincipalCamVigilante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PrincipalCam.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PrincipalCamVigilante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PrincipalCam().setVisible(true);
+                new PrincipalCamVigilante().setVisible(true);
             }
         });
     }
@@ -286,7 +302,9 @@ public class PrincipalCam extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuItem jMISalir;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPFotoPlaca;
     private javax.swing.JPanel jPanelCamara;
     private javax.swing.JTextField jTFPlacaResult;

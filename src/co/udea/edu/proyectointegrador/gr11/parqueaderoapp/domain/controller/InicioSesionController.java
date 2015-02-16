@@ -1,8 +1,11 @@
 
 package co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.controller;
 
+import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.data.dao.implement.OperarioDaoImplement;
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.data.dao.implement.OperarioUserDaoImplement;
+import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.data.daos.OperarioDao;
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.data.daos.OperarioUserDao;
+import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.Operario;
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.OperarioUser;
 
 /**
@@ -20,16 +23,16 @@ public class InicioSesionController {
         this.password=password;
     }
     
-    public boolean permitirSesion(){
-        boolean sesion=false;
+    public int permitirSesion(){
+        int role=-1;
         daoPrueba=new OperarioUserDaoImplement();
         userPrueba=daoPrueba.getOperario(usuario);
         if(userPrueba!=null){
             if(userPrueba.getPassword().equals(this.password)){
-                sesion=true;
+                return role=userPrueba.getTipoOperarioUser().getIdTipoOperarioUser();
             }
         }
-        return sesion;
+        return role;
     }
     
 }

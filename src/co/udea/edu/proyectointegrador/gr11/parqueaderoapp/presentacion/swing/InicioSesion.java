@@ -28,7 +28,7 @@ public class InicioSesion extends javax.swing.JFrame {
         jBIniciarSesion = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        jMISalir = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SCAS");
@@ -106,14 +106,14 @@ public class InicioSesion extends javax.swing.JFrame {
 
         jMenu1.setText("Archivo");
 
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/liberar-icono-6437-16.png"))); // NOI18N
-        jMenuItem1.setText("Salir");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        jMISalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/liberar-icono-6437-16.png"))); // NOI18N
+        jMISalir.setText("Salir");
+        jMISalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                jMISalirActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jMenu1.add(jMISalir);
 
         jMenuBar1.add(jMenu1);
 
@@ -135,9 +135,9 @@ public class InicioSesion extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void jMISalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMISalirActionPerformed
         System.exit(0);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_jMISalirActionPerformed
 
     private void jTFUsuarioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTFUsuarioFocusGained
         if(jTFUsuario.getText().equals("Nombre de usuario")){
@@ -152,15 +152,20 @@ public class InicioSesion extends javax.swing.JFrame {
     }//GEN-LAST:event_jTFUsuarioFocusLost
 
     private void jBIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBIniciarSesionActionPerformed
-        boolean inicio=false;
+        int role;
         usuario=jTFUsuario.getText();
         password=JPFPassword.getText();
         if(!usuario.equals("Nombre de usuario")){
             if(usuario!=null && password!=null){
                InicioSesionController iniciar=new InicioSesionController(usuario,password);
-               inicio=iniciar.permitirSesion();
-               if(inicio==true){
-                   PrincipalCam nuevaCam=new PrincipalCam();
+               role=iniciar.permitirSesion();
+               if(role==0){
+                   PrincipalAdmin nuevoAdmin=new PrincipalAdmin();
+                   nuevoAdmin.setVisible(true);
+                   this.hide();
+               }
+               if(role==1){
+                   PrincipalCamVigilante nuevaCam=new PrincipalCamVigilante();
                    nuevaCam.setVisible(true);
                    this.hide();
                }else{
@@ -228,9 +233,9 @@ public class InicioSesion extends javax.swing.JFrame {
     private javax.swing.JPasswordField JPFPassword;
     private javax.swing.JButton jBIniciarSesion;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenuItem jMISalir;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTFUsuario;
     // End of variables declaration//GEN-END:variables
