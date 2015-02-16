@@ -168,9 +168,10 @@ public class InicioSesion extends javax.swing.JFrame {
                    PrincipalCamVigilante nuevaCam=new PrincipalCamVigilante();
                    nuevaCam.setVisible(true);
                    this.hide();
-               }else{
+               }
+               if(role==-1){
                    JOptionPane.showMessageDialog(null, "Por favor verifique su "
-                           + "nombre de usuario o password", "Error al iniciar sesión", 
+                           + "nombre de usuario o password", "Error al iniciar sesión",
                            JOptionPane.ERROR_MESSAGE);
                }
             }else{

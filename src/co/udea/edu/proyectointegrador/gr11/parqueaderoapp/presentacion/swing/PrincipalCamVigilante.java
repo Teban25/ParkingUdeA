@@ -1,6 +1,8 @@
 
 package co.udea.edu.proyectointegrador.gr11.parqueaderoapp.presentacion.swing;
 
+import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.controller.AlprController;
+import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.exception.BussinessException;
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
 import java.awt.Color;
@@ -27,17 +29,22 @@ public class PrincipalCamVigilante extends javax.swing.JFrame {
     JLabel lFotoPlaca;
     ImageIcon icon;
     Icon icono;
+    AlprController controladorAlpr;
+    String rutaPlaca;
+    String resultado;
+    private final String mensajeResultadoPositivo="Concedido";
+    private final String mensajeResultadoNegativo="Denegado";
     
     public PrincipalCamVigilante() {
         initComponents();
         this.getContentPane().setBackground(new Color(204,204,204));
         webcam = Webcam.getDefault();
-        webcam.setViewSize(new Dimension(320,240));
+        webcam.setViewSize(new Dimension(640,480));
         lFotoPlaca=new JLabel();
-        lFotoPlaca.setSize(new Dimension(320,240));
+        lFotoPlaca.setSize(new Dimension(640,480));
         panel = new WebcamPanel(webcam);
         panel.setVisible(true);
-        panel.setBounds(0, 0, 320, 240);
+        panel.setBounds(0, 0, 640,480);
         jPanelCamara.add(panel);
     }
 
@@ -70,17 +77,17 @@ public class PrincipalCamVigilante extends javax.swing.JFrame {
 
         jPanelCamara.setMaximumSize(new java.awt.Dimension(320, 240));
         jPanelCamara.setMinimumSize(new java.awt.Dimension(320, 240));
-        jPanelCamara.setPreferredSize(new java.awt.Dimension(320, 240));
+        jPanelCamara.setPreferredSize(new java.awt.Dimension(640, 480));
 
         javax.swing.GroupLayout jPanelCamaraLayout = new javax.swing.GroupLayout(jPanelCamara);
         jPanelCamara.setLayout(jPanelCamaraLayout);
         jPanelCamaraLayout.setHorizontalGroup(
             jPanelCamaraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 320, Short.MAX_VALUE)
+            .addGap(0, 640, Short.MAX_VALUE)
         );
         jPanelCamaraLayout.setVerticalGroup(
             jPanelCamaraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 240, Short.MAX_VALUE)
+            .addGap(0, 480, Short.MAX_VALUE)
         );
 
         jPFotoPlaca.setMaximumSize(new java.awt.Dimension(320, 240));
@@ -97,14 +104,27 @@ public class PrincipalCamVigilante extends javax.swing.JFrame {
             .addGap(0, 240, Short.MAX_VALUE)
         );
 
+        jLCamaraVivo.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         jLCamaraVivo.setText("Camara en vivo");
 
+        jLFotoPlaca.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         jLFotoPlaca.setText("Foto de placa");
 
+        jLTip.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         jLTip.setText("TIP");
 
+        jTFPlacaResult.setEditable(false);
+        jTFPlacaResult.setFont(new java.awt.Font("Arial Black", 0, 36)); // NOI18N
+        jTFPlacaResult.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTFPlacaResultActionPerformed(evt);
+            }
+        });
+
+        jLPlacaResult.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         jLPlacaResult.setText("Placa-Resultado");
 
+        JBEntrada.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         JBEntrada.setText("Entrada-Salida");
         JBEntrada.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -112,6 +132,10 @@ public class PrincipalCamVigilante extends javax.swing.JFrame {
             }
         });
 
+        jTFResultado.setEditable(false);
+        jTFResultado.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
+
+        jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         jLabel1.setText("Resultado E/S");
 
         jMenu1.setText("Archivo");
@@ -150,23 +174,7 @@ public class PrincipalCamVigilante extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPFotoPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addComponent(jLPlacaResult)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jTFPlacaResult)
-                        .addContainerGap())))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(119, 119, 119)
-                .addComponent(jLFotoPlaca)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(100, 100, 100)
+                .addGap(160, 160, 160)
                 .addComponent(jLCamaraVivo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLTip)
@@ -174,23 +182,32 @@ public class PrincipalCamVigilante extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanelCamara, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 24, Short.MAX_VALUE)
-                                .addComponent(JBEntrada)
-                                .addGap(42, 42, 42))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jTFResultado, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTFTip))
-                                .addContainerGap())))
+                        .addComponent(jTFTip)
+                        .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addGap(50, 50, 50))))
+                        .addGap(0, 10, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTFResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel1)
+                                .addComponent(JBEntrada)))
+                        .addGap(33, 33, 33))))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPFotoPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(74, 74, 74)
+                        .addComponent(jTFPlacaResult, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(119, 119, 119)
+                        .addComponent(jLFotoPlaca)
+                        .addGap(220, 220, 220)
+                        .addComponent(jLPlacaResult)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,15 +227,14 @@ public class PrincipalCamVigilante extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTFResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                .addComponent(jLFotoPlaca)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLFotoPlaca)
+                    .addComponent(jLPlacaResult))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPFotoPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLPlacaResult)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTFPlacaResult, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jTFPlacaResult, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -243,18 +259,34 @@ public class PrincipalCamVigilante extends javax.swing.JFrame {
             } catch (IOException ex) {
                 Logger.getLogger(PrincipalCamVigilante.class.getName()).log(Level.SEVERE, null, ex);
             }
-            icon = new ImageIcon("./images/"+tip+".jpg");
+            rutaPlaca="./images/"+tip+".jpg";
+            icon = new ImageIcon(rutaPlaca);
             icono = new ImageIcon(icon.getImage().
-                    getScaledInstance(lFotoPlaca.getWidth(),lFotoPlaca.getHeight(),
+                    getScaledInstance(640,480,
                             Image.SCALE_DEFAULT));
             lFotoPlaca.setIcon(icono);
             lFotoPlaca.setVisible(true);
             jPFotoPlaca.add(lFotoPlaca);
+            controladorAlpr=new AlprController(rutaPlaca);
+            try {
+                resultado=controladorAlpr.recognizePlateFromUser(tip);
+                jTFPlacaResult.setText(resultado);
+                jTFResultado.setSelectedTextColor(Color.GREEN);
+                jTFResultado.setText(mensajeResultadoPositivo);
+            } catch (BussinessException ex) {
+                jTFResultado.setSelectedTextColor(Color.red);
+                jTFResultado.setText(mensajeResultadoNegativo);
+                JOptionPane.showMessageDialog(null, ex.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
+            }
         }else{
             JOptionPane.showMessageDialog(null,"Ingrese un numero de TIP", 
                     "Error al intentar verificar", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_JBEntradaActionPerformed
+
+    private void jTFPlacaResultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFPlacaResultActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTFPlacaResultActionPerformed
 
     
     public static void main(String args[]) {

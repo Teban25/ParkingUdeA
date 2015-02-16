@@ -1,11 +1,8 @@
 
 package co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.controller;
 
-import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.data.dao.implement.OperarioDaoImplement;
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.data.dao.implement.OperarioUserDaoImplement;
-import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.data.daos.OperarioDao;
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.data.daos.OperarioUserDao;
-import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.Operario;
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.OperarioUser;
 
 /**

@@ -72,7 +72,8 @@ public class AlprController {
           }
         }
         throw new BussinessException("El vehiculo que intenta ingresar no esta registrado,"
-                + " por favor, registre el vehiculo del usuario");
+                + " por favor, registre el vehiculo del usuario o si esta seguro de "
+                + "tenerlo registrado, posicione su vehiculo correctamente");
     }
     
 }
