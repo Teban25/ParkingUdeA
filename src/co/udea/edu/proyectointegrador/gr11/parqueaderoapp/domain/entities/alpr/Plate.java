@@ -13,4 +13,29 @@ public class Plate {
     private String plate;
     private double confidence;
     private int matches_template;
+
+    public String getPlate() {
+        return plate;
+    }
+
+    public void setPlate(String plate) {
+        this.plate = plate;
+    }
+
+    public double getConfidence() {
+        return confidence;
+    }
+
+    public void setConfidence(double confidence) {
+        this.confidence = confidence;
+    }
+
+    public int getMatches_template() {
+        return matches_template;
+    }
+
+    public void setMatches_template(int matches_template) {
+        this.matches_template = matches_template;
+    }
+    
 }

@@ -9,6 +9,7 @@ import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.alpr.AlprRecogn
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.Usuario;
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.UsuarioVehiculo;
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.alpr.AlprResult;
+import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.alpr.Plate;
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.alpr.Result;
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.exception.BussinessException;
 import java.util.List;
@@ -59,10 +60,19 @@ public class AlprController {
         List<Result> resultadosPlacas=alprResult.getResults();
         for(UsuarioVehiculo d: vehiculosUsuario){
           for(Result r: resultadosPlacas){
-              
-          }  
+              if(d.getId().getPlaca().equals(r.getPlate())){
+                 return placa=r.getPlate();
+              }
+              List<Plate> placas=r.getCandidates();
+              for (Plate p : placas) {
+                  if (p.getPlate().equals(d.getId().getPlaca())) {
+                     return placa=p.getPlate();
+                  }
+              }
+          }
         }
-        return placa;
+        throw new BussinessException("El vehiculo que intenta ingresar no esta registrado,"
+                + " por favor, registre el vehiculo del usuario");
     }
     
 }
