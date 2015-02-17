@@ -1,5 +1,12 @@
-
 package co.udea.edu.proyectointegrador.gr11.parqueaderoapp.presentacion.swing;
+
+import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.controller.OperarioController;
+import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.Operario;
+import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.exception.BussinessException;
+import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.exception.PersistentException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -7,12 +14,25 @@ package co.udea.edu.proyectointegrador.gr11.parqueaderoapp.presentacion.swing;
  */
 public class GestionOperario extends javax.swing.JFrame {
 
-    
+    private String cedula;
+    private String nombres;
+    private String apellidos;
+    private String direccion;
+    private String telefono;
+    private String nombreUsuario;
+    private String password;
+    private String confirmPassword;
+
+    private OperarioController controller;
+
     public GestionOperario() {
         initComponents();
     }
 
     
+    public void habilitarCampos(){
+        
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -48,6 +68,11 @@ public class GestionOperario extends javax.swing.JFrame {
         setResizable(false);
 
         jBBuscar.setText("Buscar");
+        jBBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBBuscarActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Cedula:");
 
@@ -237,6 +262,28 @@ public class GestionOperario extends javax.swing.JFrame {
     private void jMSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMSalirActionPerformed
         this.hide();
     }//GEN-LAST:event_jMSalirActionPerformed
+
+    private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
+        controller = new OperarioController();
+        cedula = jTFCedula.getText();
+        if (cedula.equals("")) {
+            JOptionPane.showMessageDialog(this, "El campo de cédula no puede estar vacio",
+                    "Verifique el campo de cédula", JOptionPane.ERROR_MESSAGE);
+            jTFCedula.grabFocus();
+            return;
+        }
+        try {
+            Operario operario = controller.buscarOperario(cedula);
+            if (operario == null) {
+                JOptionPane.showMessageDialog(this, "El operario con cedula " + cedula + "no existe.",
+                        "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+                jBAgregar.setEnabled(true);
+            }
+        } catch (BussinessException | PersistentException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error al Buscar",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jBBuscarActionPerformed
 
     /**
      * @param args the command line arguments

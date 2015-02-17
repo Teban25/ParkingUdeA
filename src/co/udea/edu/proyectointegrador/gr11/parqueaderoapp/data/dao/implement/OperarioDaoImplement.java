@@ -8,6 +8,8 @@ package co.udea.edu.proyectointegrador.gr11.parqueaderoapp.data.dao.implement;
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.data.daos.OperarioDao;
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.data.hibernateconfig.HibernateUtil;
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.Operario;
+import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.exception.PersistentException;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -27,7 +29,7 @@ public class OperarioDaoImplement implements OperarioDao{
     }
     
     @Override
-    public void insertarOperario(Operario operario) {
+    public void insertarOperario(Operario operario) throws PersistentException{
         //Comienzo la transaccion
             try{
                 SessionFactory sf=HibernateUtil.getSessionFactory();
@@ -38,13 +40,15 @@ public class OperarioDaoImplement implements OperarioDao{
                 session.close();
             }catch(Exception e){
                 transaction.rollback();
+                
                 System.out.println(e.getMessage());
                 System.out.println(e.getCause());
+                throw new PersistentException("Hubo problemas con la base de datos");
             }
     }
 
     @Override
-    public Operario getOperario(String identificacion) {
+    public Operario getOperario(String identificacion) throws PersistentException {
         Operario retornaOper=null;
         try{
             SessionFactory sf=HibernateUtil.getSessionFactory();
@@ -54,8 +58,43 @@ public class OperarioDaoImplement implements OperarioDao{
         }catch(Exception e){
             System.out.println(e.getMessage());
             System.out.println(e.getCause());
+            throw new PersistentException("Hubo problemas con la base de datos");
         }
         return retornaOper;
+    }
+
+    @Override
+    public void modificarOperario(Operario operario) throws PersistentException {
+        try{
+            SessionFactory sf=HibernateUtil.getSessionFactory();
+            session=sf.openSession();
+            session.update(operario);
+            session.close();
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            System.out.println(e.getCause());
+            throw new PersistentException("Hubo problemas con la base de datos");
+        }
+    }
+
+    @Override
+    public void eliminarOperario(String cedula) throws PersistentException {
+        try{
+            Operario operario= getOperario(cedula);
+            if(operario==null){
+                throw new PersistentException("El usuario que desea eliminar no existe");
+            }
+                
+            SessionFactory sf=HibernateUtil.getSessionFactory();
+            
+            session=sf.openSession();
+            session.delete(operario);
+            session.close();
+        }catch(PersistentException | HibernateException e){
+            System.out.println(e.getMessage());
+            System.out.println(e.getCause());
+            throw new PersistentException("Hubo problemas con la base de datos");
+        }
     }
     
 }
