@@ -26,7 +26,8 @@ public class InicioSesionController {
         userPrueba=daoPrueba.getOperario(usuario);
         if(userPrueba!=null){
             if(userPrueba.getPassword().equals(this.password)){
-                return role=userPrueba.getTipoOperarioUser().getIdTipoOperarioUser();
+                role=userPrueba.getTipoOperarioUser().getIdTipoOperarioUser();
+                return role;
             }
         }
         return role;

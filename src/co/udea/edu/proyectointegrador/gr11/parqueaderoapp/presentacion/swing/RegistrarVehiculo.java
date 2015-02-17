@@ -2,6 +2,7 @@
 package co.udea.edu.proyectointegrador.gr11.parqueaderoapp.presentacion.swing;
 
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -11,7 +12,8 @@ public class RegistrarVehiculo extends javax.swing.JFrame {
     private String placa;
     private String marca;
     private String color;
-    
+    private String tipoVehiculo;
+    private String tip;
     
     
     public RegistrarVehiculo() {
@@ -60,12 +62,19 @@ public class RegistrarVehiculo extends javax.swing.JFrame {
 
         jLabel6.setText("Tipo de vehiculo:");
 
+        jCBTipoVehiculo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar", "Motocicleta" }));
+
         jLabel7.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         jLabel7.setText("Información del vinculado");
 
         jLabel8.setText("TIP:");
 
         jBRegistrarVehiculo.setText("Registrar vehiculo");
+        jBRegistrarVehiculo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBRegistrarVehiculoActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("Archivo");
 
@@ -100,23 +109,17 @@ public class RegistrarVehiculo extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel4))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel2)
-                                            .addComponent(jLabel4))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jTFPlaca)
-                                            .addComponent(jTFColor, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel3)
-                                            .addComponent(jLabel5)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jCBTipoVehiculo, 0, 117, Short.MAX_VALUE)))
+                                    .addComponent(jTFPlaca)
+                                    .addComponent(jTFColor, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel5))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jTFMarca)
@@ -124,7 +127,11 @@ public class RegistrarVehiculo extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTFTip, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jTFTip, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jCBTipoVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(138, 138, 138)
                         .addComponent(jBRegistrarVehiculo)))
@@ -142,12 +149,11 @@ public class RegistrarVehiculo extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(jTFMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTFColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel5)
-                        .addComponent(jTFModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTFColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(jTFModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
                 .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -171,6 +177,20 @@ public class RegistrarVehiculo extends javax.swing.JFrame {
     private void jMISalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMISalirActionPerformed
         this.hide();
     }//GEN-LAST:event_jMISalirActionPerformed
+
+    private void jBRegistrarVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBRegistrarVehiculoActionPerformed
+        placa=jTFPlaca.getText();
+        marca=jTFMarca.getText();
+        color=jTFColor.getText();
+        tipoVehiculo=jCBTipoVehiculo.getSelectedItem().toString();
+        tip=jTFTip.getText();
+        if((!placa.equals("")) & (!marca.equals("")) & (!color.equals("")) &
+                (!tipoVehiculo.equals("Seleccionar"))& (!tip.equals(""))){
+        }else{
+            JOptionPane.showMessageDialog(null, "Falta algún campo por ingresar, "
+                    + "por favor verifique", "Atención!", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jBRegistrarVehiculoActionPerformed
 
     /**
      * @param args the command line arguments
