@@ -26,4 +26,6 @@ public interface OperarioDao {
     public void modificarOperario(Operario operario) throws PersistentException;
     
     public void eliminarOperario (String cedula) throws PersistentException;
+    
+    public Operario getOperarioByNombreUsuario(String nombreUsuario) throws PersistentException;
 }

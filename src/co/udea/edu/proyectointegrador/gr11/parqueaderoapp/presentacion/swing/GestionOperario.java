@@ -2,12 +2,14 @@ package co.udea.edu.proyectointegrador.gr11.parqueaderoapp.presentacion.swing;
 
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.controller.OperarioController;
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.Operario;
+import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.OperarioUser;
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.TipoOperarioUser;
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.exception.BussinessException;
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.exception.PersistentException;
 import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import java.util.Arrays;
 
 /**
  *
@@ -23,6 +25,8 @@ public class GestionOperario extends javax.swing.JFrame {
     private String nombreUsuario;
     private String password;
     private String confirmPassword;
+    private int idTipoOperarioUser;
+    List<TipoOperarioUser> tiposOperario;
 
     private OperarioController controller;
     private Operario operario;
@@ -59,7 +63,7 @@ public class GestionOperario extends javax.swing.JFrame {
     public void agregarItems(JComboBox caja) {
         controller = new OperarioController();
         try {
-            List<TipoOperarioUser> tiposOperario = controller.getTiposOperario();
+            tiposOperario = controller.getTiposOperario();
             tiposOperario.stream().forEach((tipo) -> {
                 caja.addItem(tipo.getDescripcion());
             });
@@ -68,33 +72,74 @@ public class GestionOperario extends javax.swing.JFrame {
         }
 
     }
-    private void verificarDatosdeIngreso() {
-        if(jTFNombre.getText().equals("")){
-            JOptionPane.showMessageDialog(this, "Hay campos sin llenar en el formulario", "Advertencia",JOptionPane.ERROR_MESSAGE);
+
+    private boolean validarDatosdeIngreso() {
+        if (jTFNombre.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Hay campos sin llenar en el formulario", "Advertencia", JOptionPane.ERROR_MESSAGE);
             jTFNombre.grabFocus();
+            return false;
         }
-        if(jTFApellido.getText().equals("")){
-            JOptionPane.showMessageDialog(this, "Hay campos sin llenar en el formulario", "Advertencia",JOptionPane.ERROR_MESSAGE);
+        if (jTFApellido.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Hay campos sin llenar en el formulario", "Advertencia", JOptionPane.ERROR_MESSAGE);
             jTFApellido.grabFocus();
+            return false;
         }
-        if(jTFDireccion.getText().equals("")){
-            JOptionPane.showMessageDialog(this, "Hay campos sin llenar en el formulario", "Advertencia",JOptionPane.ERROR_MESSAGE);
+        if (jTFDireccion.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Hay campos sin llenar en el formulario", "Advertencia", JOptionPane.ERROR_MESSAGE);
             jTFDireccion.grabFocus();
+            return false;
         }
-        
-        if(jTFTelefono.getText().equals("")){
-            JOptionPane.showMessageDialog(this, "Hay campos sin llenar en el formulario", "Advertencia",JOptionPane.ERROR_MESSAGE);
+
+        if (jTFTelefono.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Hay campos sin llenar en el formulario", "Advertencia", JOptionPane.ERROR_MESSAGE);
             jTFTelefono.grabFocus();
+            return false;
         }
-        
-        jTFTelefono.setEditable(true);
-        jTFConfirmPassword.setEditable(true);
-        jTFPassword.setEditable(true);
-        jBAgregar.setEnabled(false);
-        jBActualizar.setEnabled(true);
-        jTFCedula.setEditable(false);
+        if (jTFTelefono.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Hay campos sin llenar en el formulario", "Advertencia", JOptionPane.ERROR_MESSAGE);
+            jTFTelefono.grabFocus();
+            return false;
+        }
+        if (jTFNombreUsuario.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Hay campos sin llenar en el formulario", "Advertencia", JOptionPane.ERROR_MESSAGE);
+            jTFNombreUsuario.grabFocus();
+            return false;
+        }
+        if (jTFPassword.getPassword().length == 0) {
+            JOptionPane.showMessageDialog(this, "Hay campos sin llenar en el formulario", "Advertencia", JOptionPane.ERROR_MESSAGE);
+            jTFPassword.grabFocus();
+            return false;
+        }
+        if (jTFConfirmPassword.getPassword().length == 0) {
+            JOptionPane.showMessageDialog(this, "Hay campos sin llenar en el formulario", "Advertencia", JOptionPane.ERROR_MESSAGE);
+            jTFConfirmPassword.grabFocus();
+            return false;
+        }
+        char[] passwordChar = jTFPassword.getPassword();
+        char[] confirmPasswordChar = jTFConfirmPassword.getPassword();
+        if (!Arrays.equals(passwordChar, confirmPasswordChar)) {
+            JOptionPane.showMessageDialog(this, "Las contraseñas deben coincidir", "Advertencia", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        if (jCBTipoOperario.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un tipo de operario", "Advertencia", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+
     }
 
+    private void vaciarCampos() {
+        jTFCedula.setText("");
+        jTFNombre.setText("");
+        jTFApellido.setText("");
+        jTFDireccion.setText("");
+        jTFTelefono.setText("");
+        jTFNombreUsuario.setText("");
+        jCBTipoOperario.setSelectedIndex(0);
+        jCBActivo.setSelected(true);
+        
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -195,6 +240,7 @@ public class GestionOperario extends javax.swing.JFrame {
 
         jCBTipoOperario.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tipo de Usuario" }));
 
+        jCBActivo.setSelected(true);
         jCBActivo.setText("Activo");
 
         jBCancelar.setText("Cancelar");
@@ -259,25 +305,24 @@ public class GestionOperario extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jSeparator2))
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(87, 87, 87)
-                        .addComponent(jBAgregar)
-                        .addGap(18, 18, 18)
-                        .addComponent(jBActualizar)
-                        .addGap(18, 18, 18)
-                        .addComponent(jBCancelar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1)
+                        .addComponent(jTFCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTFCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jBBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jBBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(81, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jBAgregar)
+                .addGap(18, 18, 18)
+                .addComponent(jBActualizar)
+                .addGap(18, 18, 18)
+                .addComponent(jBCancelar)
+                .addGap(56, 56, 56))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jBActualizar, jBAgregar, jBCancelar});
@@ -398,13 +443,51 @@ public class GestionOperario extends javax.swing.JFrame {
     }//GEN-LAST:event_jBBuscarActionPerformed
 
     private void jBActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBActualizarActionPerformed
-        
+
     }//GEN-LAST:event_jBActualizarActionPerformed
 
     private void jBAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAgregarActionPerformed
-        
-        
-        controller= new OperarioController();
+        if (!validarDatosdeIngreso()) {
+            return;
+        }
+        if (!jCBActivo.isSelected()) {
+            if (JOptionPane.showConfirmDialog(this, "Está seguro que el usuario que "
+                    + "se agregará esté inactivo?", "Advertencia", JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE) != JOptionPane.YES_OPTION) {
+                return;
+            }
+        }
+        controller = new OperarioController();
+        nombres = jTFNombre.getText();
+        apellidos = jTFApellido.getText();
+        direccion = jTFDireccion.getText();
+        telefono = jTFTelefono.getText();
+        nombreUsuario = jTFNombreUsuario.getText();
+
+        password = String.copyValueOf(jTFPassword.getPassword());
+        operario = new Operario();
+        operario.setOperarioUser(new OperarioUser());
+        operario.setNombre(nombres);
+        operario.setApellido(apellidos);
+        operario.setDireccion(direccion);
+        operario.setIdentificacion(cedula);
+        operario.setTelefono(telefono);
+        operario.getOperarioUser().setActivo(jCBActivo.isSelected());
+        operario.getOperarioUser().setPassword(password);
+        operario.getOperarioUser().setNombreUsuarioOperario(nombreUsuario);
+        tiposOperario.stream().filter((t) -> (((String)jCBTipoOperario.getSelectedItem()).equals(t.getDescripcion()))).forEach((t) -> {
+            operario.getOperarioUser().setTipoOperarioUser(
+                    new TipoOperarioUser(t.getIdTipoOperarioUser(), null));
+        });
+     
+        /*try {
+         controller.insertarOperario(operario);
+         vaciarCampos();
+         } catch (BussinessException | PersistentException ex) {
+         JOptionPane.showMessageDialog(this, ex.getMessage(), "Mensaje", JOptionPane.WARNING_MESSAGE);
+         }*/
+        vaciarCampos();
+
     }//GEN-LAST:event_jBAgregarActionPerformed
 
     /**
@@ -476,5 +559,4 @@ public class GestionOperario extends javax.swing.JFrame {
     private javax.swing.JTextField jTFTelefono;
     // End of variables declaration//GEN-END:variables
 
-    
 }

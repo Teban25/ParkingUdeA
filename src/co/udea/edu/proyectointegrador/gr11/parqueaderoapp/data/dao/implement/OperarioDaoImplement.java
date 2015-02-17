@@ -10,6 +10,7 @@ import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.data.hibernateconfig.H
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.Operario;
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.exception.PersistentException;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -95,6 +96,24 @@ public class OperarioDaoImplement implements OperarioDao{
             System.out.println(e.getCause());
             throw new PersistentException("Hubo problemas con la base de datos");
         }
+    }
+
+    @Override
+    public Operario getOperarioByNombreUsuario(String nombreUsuario) throws PersistentException {
+        Operario retornaOper=null;
+        try{
+            SessionFactory sf=HibernateUtil.getSessionFactory();
+            session=sf.openSession();
+            Query query = session.createQuery("FROM Operario AS e WHERE e.nombreUsuario= :nombreUsuario");
+            query.setParameter("nombreUsuario", nombreUsuario);
+            retornaOper= (Operario) query.uniqueResult();
+            session.close();
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            System.out.println(e.getCause());
+            throw new PersistentException("Hubo problemas con la base de datos");
+        }
+        return retornaOper;
     }
     
 }
