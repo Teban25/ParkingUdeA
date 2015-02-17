@@ -11,11 +11,5 @@
         <property name="tipoVehiculoDescripcion" type="string">
             <column name="TipoVehiculoDescripcion" length="45" not-null="true" />
         </property>
-        <set name="vehiculos" table="Vehiculo" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="IdTipoVehiculo" not-null="true" />
-            </key>
-            <one-to-many class="co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.Vehiculo" />
-        </set>
     </class>
 </hibernate-mapping>

@@ -13,7 +13,6 @@ public class TipoVehiculo  implements java.io.Serializable {
 
      private int idTipoVehiculo;
      private String tipoVehiculoDescripcion;
-     private Set vehiculos = new HashSet(0);
 
     public TipoVehiculo() {
     }
@@ -23,12 +22,7 @@ public class TipoVehiculo  implements java.io.Serializable {
         this.idTipoVehiculo = idTipoVehiculo;
         this.tipoVehiculoDescripcion = tipoVehiculoDescripcion;
     }
-    public TipoVehiculo(int idTipoVehiculo, String tipoVehiculoDescripcion, Set vehiculos) {
-       this.idTipoVehiculo = idTipoVehiculo;
-       this.tipoVehiculoDescripcion = tipoVehiculoDescripcion;
-       this.vehiculos = vehiculos;
-    }
-   
+    
     public int getIdTipoVehiculo() {
         return this.idTipoVehiculo;
     }
@@ -43,16 +37,7 @@ public class TipoVehiculo  implements java.io.Serializable {
     public void setTipoVehiculoDescripcion(String tipoVehiculoDescripcion) {
         this.tipoVehiculoDescripcion = tipoVehiculoDescripcion;
     }
-    public Set getVehiculos() {
-        return this.vehiculos;
-    }
-    
-    public void setVehiculos(Set vehiculos) {
-        this.vehiculos = vehiculos;
-    }
-
-
-
+  
 
 }
 

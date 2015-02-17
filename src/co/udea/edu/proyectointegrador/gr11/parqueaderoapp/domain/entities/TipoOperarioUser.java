@@ -13,7 +13,7 @@ public class TipoOperarioUser  implements java.io.Serializable {
 
      private int idTipoOperarioUser;
      private String descripcion;
-     private Set operarioUsers = new HashSet(0);
+    
 
     public TipoOperarioUser() {
     }
@@ -23,12 +23,7 @@ public class TipoOperarioUser  implements java.io.Serializable {
         this.idTipoOperarioUser = idTipoOperarioUser;
         this.descripcion = descripcion;
     }
-    public TipoOperarioUser(int idTipoOperarioUser, String descripcion, Set operarioUsers) {
-       this.idTipoOperarioUser = idTipoOperarioUser;
-       this.descripcion = descripcion;
-       this.operarioUsers = operarioUsers;
-    }
-   
+ 
     public int getIdTipoOperarioUser() {
         return this.idTipoOperarioUser;
     }
@@ -43,17 +38,7 @@ public class TipoOperarioUser  implements java.io.Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    public Set getOperarioUsers() {
-        return this.operarioUsers;
-    }
-    
-    public void setOperarioUsers(Set operarioUsers) {
-        this.operarioUsers = operarioUsers;
-    }
-
-
-
-
+  
 }
 
 

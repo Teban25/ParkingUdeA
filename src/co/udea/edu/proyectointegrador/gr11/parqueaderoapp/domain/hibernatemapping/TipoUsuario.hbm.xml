@@ -11,11 +11,6 @@
         <property name="tipoUsuarioDescripcion" type="string">
             <column name="TipoUsuarioDescripcion" length="100" not-null="true" />
         </property>
-        <set name="usuarios" table="Usuario" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="IdTipoUsuario" not-null="true" />
-            </key>
-            <one-to-many class="co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.Usuario" />
-        </set>
+
     </class>
 </hibernate-mapping>

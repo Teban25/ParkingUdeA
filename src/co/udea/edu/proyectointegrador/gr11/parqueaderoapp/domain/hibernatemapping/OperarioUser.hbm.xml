@@ -14,17 +14,6 @@
         <property name="password" type="string">
             <column name="Password" length="100" not-null="true" />
         </property>
-        <set name="ingresos" table="Ingreso" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="NombreUsuarioOperario" length="100" not-null="true" />
-            </key>
-            <one-to-many class="co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.Ingreso" />
-        </set>
-        <set name="operarios" table="Operario" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="NombreUsuarioOperario" length="100" not-null="true" />
-            </key>
-            <one-to-many class="co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.Operario" />
-        </set>
+
     </class>
 </hibernate-mapping>

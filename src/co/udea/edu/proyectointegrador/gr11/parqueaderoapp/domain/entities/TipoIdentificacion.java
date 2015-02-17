@@ -13,7 +13,7 @@ public class TipoIdentificacion  implements java.io.Serializable {
 
      private int idTipoIdentificacion;
      private String tipoIdentificacionDescripcion;
-     private Set usuarios = new HashSet(0);
+   
 
     public TipoIdentificacion() {
     }
@@ -23,11 +23,7 @@ public class TipoIdentificacion  implements java.io.Serializable {
         this.idTipoIdentificacion = idTipoIdentificacion;
         this.tipoIdentificacionDescripcion = tipoIdentificacionDescripcion;
     }
-    public TipoIdentificacion(int idTipoIdentificacion, String tipoIdentificacionDescripcion, Set usuarios) {
-       this.idTipoIdentificacion = idTipoIdentificacion;
-       this.tipoIdentificacionDescripcion = tipoIdentificacionDescripcion;
-       this.usuarios = usuarios;
-    }
+   
    
     public int getIdTipoIdentificacion() {
         return this.idTipoIdentificacion;
@@ -43,16 +39,7 @@ public class TipoIdentificacion  implements java.io.Serializable {
     public void setTipoIdentificacionDescripcion(String tipoIdentificacionDescripcion) {
         this.tipoIdentificacionDescripcion = tipoIdentificacionDescripcion;
     }
-    public Set getUsuarios() {
-        return this.usuarios;
-    }
-    
-    public void setUsuarios(Set usuarios) {
-        this.usuarios = usuarios;
-    }
-
-
-
+  
 
 }
 

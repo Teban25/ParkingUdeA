@@ -15,7 +15,7 @@
                 <column name="UsuarioIdentificacion" length="100" />
             </key-property>
         </composite-id>
-        <many-to-one name="operarioUser" class="co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.OperarioUser" fetch="select">
+        <many-to-one name="operarioUser" class="co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.OperarioUser" fetch="join">
             <column name="NombreUsuarioOperario" length="100" not-null="true" />
         </many-to-one>
         <many-to-one name="usuarioVehiculo" class="co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.UsuarioVehiculo" update="false" insert="false"

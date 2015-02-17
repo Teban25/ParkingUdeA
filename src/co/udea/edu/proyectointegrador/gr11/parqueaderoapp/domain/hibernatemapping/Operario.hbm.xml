@@ -8,7 +8,7 @@
             <column name="Identificacion" length="100" />
             <generator class="assigned" />
         </id>
-        <many-to-one name="operarioUser" class="co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.OperarioUser" fetch="select">
+        <many-to-one name="operarioUser" class="co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.OperarioUser" fetch="join">
             <column name="NombreUsuarioOperario" length="100" not-null="true" />
         </many-to-one>
         <property name="nombre" type="string">

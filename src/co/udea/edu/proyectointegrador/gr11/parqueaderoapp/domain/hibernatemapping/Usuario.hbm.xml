@@ -8,10 +8,10 @@
             <column name="Identificacion" length="100" />
             <generator class="assigned" />
         </id>
-        <many-to-one name="tipoIdentificacion" class="co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.TipoIdentificacion" fetch="select">
+        <many-to-one name="tipoIdentificacion" class="co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.TipoIdentificacion" fetch="join">
             <column name="IdTipoIdentificacion" not-null="true" />
         </many-to-one>
-        <many-to-one name="tipoUsuario" class="co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.TipoUsuario" fetch="select">
+        <many-to-one name="tipoUsuario" class="co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.TipoUsuario" fetch="join">
             <column name="IdTipoUsuario" not-null="true" />
         </many-to-one>
         <property name="nombre" type="string">
@@ -29,11 +29,6 @@
         <property name="genero" type="string">
             <column name="Genero" length="100" />
         </property>
-        <set name="usuarioVehiculos" table="UsuarioVehiculo" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="UsuarioIdentificacion" length="100" not-null="true" />
-            </key>
-            <one-to-many class="co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.UsuarioVehiculo" />
-        </set>
+
     </class>
 </hibernate-mapping>
