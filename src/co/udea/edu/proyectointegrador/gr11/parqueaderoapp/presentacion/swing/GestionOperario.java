@@ -10,6 +10,8 @@ import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -68,7 +70,8 @@ public class GestionOperario extends javax.swing.JFrame {
                 caja.addItem(tipo.getDescripcion());
             });
         } catch (BussinessException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -138,7 +141,47 @@ public class GestionOperario extends javax.swing.JFrame {
         jTFNombreUsuario.setText("");
         jCBTipoOperario.setSelectedIndex(0);
         jCBActivo.setSelected(true);
-        
+        jBActualizar.setEnabled(false);
+        jBAgregar.setEnabled(false);
+        jBBuscar.setEnabled(true);
+
+    }
+
+    public void crearOperario(String funcion) {
+        if (!validarDatosdeIngreso()) {
+            return;
+        }
+        if (!jCBActivo.isSelected()) {
+            if (JOptionPane.showConfirmDialog(this, "Está seguro que el usuario que "
+                    + "se " + funcion + " esté inactivo?", "Advertencia",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE) != JOptionPane.YES_OPTION) {
+                return;
+            }
+        }
+        controller = new OperarioController();
+        nombres = jTFNombre.getText();
+        apellidos = jTFApellido.getText();
+        direccion = jTFDireccion.getText();
+        telefono = jTFTelefono.getText();
+        nombreUsuario = jTFNombreUsuario.getText();
+
+        password = String.copyValueOf(jTFPassword.getPassword());
+        operario = new Operario();
+        operario.setOperarioUser(new OperarioUser());
+        operario.setNombre(nombres);
+        operario.setApellido(apellidos);
+        operario.setDireccion(direccion);
+        operario.setIdentificacion(cedula);
+        operario.setTelefono(telefono);
+        operario.getOperarioUser().setActivo(jCBActivo.isSelected());
+        operario.getOperarioUser().setPassword(password);
+        operario.getOperarioUser().setNombreUsuarioOperario(nombreUsuario);
+        tiposOperario.stream().filter((t) -> (((String) jCBTipoOperario.getSelectedItem())
+                .equals(t.getDescripcion()))).forEach((t) -> {
+            operario.getOperarioUser().setTipoOperarioUser(
+                    new TipoOperarioUser(t.getIdTipoOperarioUser(), null));
+        });
     }
 
     @SuppressWarnings("unchecked")
@@ -443,49 +486,29 @@ public class GestionOperario extends javax.swing.JFrame {
     }//GEN-LAST:event_jBBuscarActionPerformed
 
     private void jBActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBActualizarActionPerformed
+        crearOperario("actualizará");
 
+        try {
+            controller.actualizarOperario(operario);
+            JOptionPane.showMessageDialog(this, "El operario se actualizó correctamente",
+                    "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
+            vaciarCampos();
+        } catch (BussinessException | PersistentException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Mensaje", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_jBActualizarActionPerformed
 
     private void jBAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAgregarActionPerformed
-        if (!validarDatosdeIngreso()) {
-            return;
-        }
-        if (!jCBActivo.isSelected()) {
-            if (JOptionPane.showConfirmDialog(this, "Está seguro que el usuario que "
-                    + "se agregará esté inactivo?", "Advertencia", JOptionPane.YES_NO_CANCEL_OPTION,
-                    JOptionPane.QUESTION_MESSAGE) != JOptionPane.YES_OPTION) {
-                return;
-            }
-        }
-        controller = new OperarioController();
-        nombres = jTFNombre.getText();
-        apellidos = jTFApellido.getText();
-        direccion = jTFDireccion.getText();
-        telefono = jTFTelefono.getText();
-        nombreUsuario = jTFNombreUsuario.getText();
+        crearOperario("agregará");
 
-        password = String.copyValueOf(jTFPassword.getPassword());
-        operario = new Operario();
-        operario.setOperarioUser(new OperarioUser());
-        operario.setNombre(nombres);
-        operario.setApellido(apellidos);
-        operario.setDireccion(direccion);
-        operario.setIdentificacion(cedula);
-        operario.setTelefono(telefono);
-        operario.getOperarioUser().setActivo(jCBActivo.isSelected());
-        operario.getOperarioUser().setPassword(password);
-        operario.getOperarioUser().setNombreUsuarioOperario(nombreUsuario);
-        tiposOperario.stream().filter((t) -> (((String)jCBTipoOperario.getSelectedItem()).equals(t.getDescripcion()))).forEach((t) -> {
-            operario.getOperarioUser().setTipoOperarioUser(
-                    new TipoOperarioUser(t.getIdTipoOperarioUser(), null));
-        });
-     
-        /*try {
-         controller.insertarOperario(operario);
-         vaciarCampos();
-         } catch (BussinessException | PersistentException ex) {
-         JOptionPane.showMessageDialog(this, ex.getMessage(), "Mensaje", JOptionPane.WARNING_MESSAGE);
-         }*/
+        try {
+            controller.insertarOperario(operario);
+             JOptionPane.showMessageDialog(this, "El operario se creó correctamente",
+                    "Operación Exitosa", JOptionPane.INFORMATION_MESSAGE);
+            vaciarCampos();
+        } catch (BussinessException | PersistentException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Mensaje", JOptionPane.WARNING_MESSAGE);
+        }
         vaciarCampos();
 
     }//GEN-LAST:event_jBAgregarActionPerformed

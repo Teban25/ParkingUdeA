@@ -25,11 +25,11 @@ public class InicioSesionController {
     public int permitirSesion()throws PersistentException, BussinessException{
         daoPrueba=new OperarioUserDaoImplement();
         operario=daoPrueba.getOperario(usuario);
-        if (operario!=null) {
+        if (operario==null) {
             throw new BussinessException("Verifique el nombre de usuario");
         }
         
-        if(operario.getPassword().equals(this.password)){
+        if(!operario.getPassword().equals(this.password)){
             throw new BussinessException("Verifique la contraseña e intentelo de nuevo");
         }
         

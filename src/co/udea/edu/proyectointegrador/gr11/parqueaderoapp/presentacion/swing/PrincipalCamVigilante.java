@@ -266,8 +266,8 @@ public class PrincipalCamVigilante extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLFotoPlaca)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLFotoPlaca, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLPlacaResult, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -339,17 +339,17 @@ public class PrincipalCamVigilante extends javax.swing.JFrame {
             lFotoPlaca.setVisible(true);
             jPFotoPlaca.setSize(340,280);
             jPFotoPlaca.add(lFotoPlaca);
-            //controladorAlpr=new AlprController(rutaPlaca);
-         //   try {
-               // resultado=controladorAlpr.recognizePlateFromUser(tip);
+            controladorAlpr=new AlprController(rutaPlaca);
+            try {
+               resultado=controladorAlpr.recognizePlateFromUser(tip);
                 jTFPlacaResult.setText(resultado);
                 jTFResultado.setForeground(new Color(85, 168, 73));
                 jTFResultado.setText(mensajeResultadoPositivo);
-           // } catch (BussinessException ex) {
-                //jTFResultado.setSelectedTextColor(Color.red);
-            //    jTFResultado.setText(mensajeResultadoNegativo);
-                //JOptionPane.showMessageDialog(null, ex.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
-          //  }
+            } catch (BussinessException ex) {
+                jTFResultado.setSelectedTextColor(Color.red);
+                jTFResultado.setText(mensajeResultadoNegativo);
+                JOptionPane.showMessageDialog(null, ex.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
+            }
         }else{
             JOptionPane.showMessageDialog(null,"Ingrese un numero de TIP", 
                     "Error al intentar verificar", JOptionPane.ERROR_MESSAGE);
