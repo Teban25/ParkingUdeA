@@ -6,10 +6,14 @@
 package co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.controller;
 
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.data.dao.implement.OperarioDaoImplement;
+import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.data.dao.implement.TipoOperarioUserDaoImplement;
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.data.daos.OperarioDao;
+import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.data.daos.TipoOperarioUserDao;
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.Operario;
+import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.TipoOperarioUser;
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.exception.BussinessException;
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.exception.PersistentException;
+import java.util.List;
 
 /**
  *
@@ -18,6 +22,7 @@ import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.exception.Persi
 public class OperarioController {
 
     private OperarioDao operarioDao;
+    private TipoOperarioUserDao tipoOperarioUserDao;
 
     public Operario buscarOperario(String cedula) throws BussinessException, PersistentException {
         operarioDao = new OperarioDaoImplement();
@@ -52,6 +57,17 @@ public class OperarioController {
                 || operario.getOperarioUser().getPassword().equals("")) {
             throw new BussinessException("Alguno de los campos está vacío");
         }
+    }
+    
+    public List<TipoOperarioUser> getTiposOperario() throws BussinessException{
+        List<TipoOperarioUser> tipoOperario;
+        tipoOperarioUserDao=new TipoOperarioUserDaoImplement();
+        tipoOperario=tipoOperarioUserDao.getAllTipoOperario();
+        if(tipoOperario==null){
+            throw new BussinessException("Hubo un error al recuperar los tipos de"
+                    + " Operarios, contacte al administrador");
+        }
+        return tipoOperario;
     }
 
 }
