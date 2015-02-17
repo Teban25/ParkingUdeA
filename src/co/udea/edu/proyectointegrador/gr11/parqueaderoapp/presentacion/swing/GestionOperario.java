@@ -6,8 +6,6 @@ import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.TipoOp
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.exception.BussinessException;
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.exception.PersistentException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
@@ -42,8 +40,20 @@ public class GestionOperario extends javax.swing.JFrame {
         jTFNombreUsuario.setEditable(true);
         jTFConfirmPassword.setEditable(true);
         jTFPassword.setEditable(true);
-        jCBTipoOperario.setEditable(true);
+        jBAgregar.setEnabled(true);
 
+    }
+
+    private void habilitarCamposEnExistencia() {
+        jTFNombre.setEditable(true);
+        jTFApellido.setEditable(true);
+        jTFDireccion.setEditable(true);
+        jTFTelefono.setEditable(true);
+        jTFConfirmPassword.setEditable(true);
+        jTFPassword.setEditable(true);
+        jBAgregar.setEnabled(false);
+        jBActualizar.setEnabled(true);
+        jTFCedula.setEditable(false);
     }
 
     public void agregarItems(JComboBox caja) {
@@ -58,6 +68,33 @@ public class GestionOperario extends javax.swing.JFrame {
         }
 
     }
+    private void verificarDatosdeIngreso() {
+        if(jTFNombre.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "Hay campos sin llenar en el formulario", "Advertencia",JOptionPane.ERROR_MESSAGE);
+            jTFNombre.grabFocus();
+        }
+        if(jTFApellido.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "Hay campos sin llenar en el formulario", "Advertencia",JOptionPane.ERROR_MESSAGE);
+            jTFApellido.grabFocus();
+        }
+        if(jTFDireccion.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "Hay campos sin llenar en el formulario", "Advertencia",JOptionPane.ERROR_MESSAGE);
+            jTFDireccion.grabFocus();
+        }
+        
+        if(jTFTelefono.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "Hay campos sin llenar en el formulario", "Advertencia",JOptionPane.ERROR_MESSAGE);
+            jTFTelefono.grabFocus();
+        }
+        
+        jTFTelefono.setEditable(true);
+        jTFConfirmPassword.setEditable(true);
+        jTFPassword.setEditable(true);
+        jBAgregar.setEnabled(false);
+        jBActualizar.setEnabled(true);
+        jTFCedula.setEditable(false);
+    }
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -82,13 +119,14 @@ public class GestionOperario extends javax.swing.JFrame {
         jTFPassword = new javax.swing.JPasswordField();
         jBAgregar = new javax.swing.JButton();
         jBActualizar = new javax.swing.JButton();
-        jBEliminar = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         jTFConfirmPassword = new javax.swing.JPasswordField();
         jLabel11 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel3 = new javax.swing.JLabel();
         jCBTipoOperario = new javax.swing.JComboBox();
+        jCBActivo = new javax.swing.JCheckBox();
+        jBCancelar = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMArchivo = new javax.swing.JMenu();
         jMSalir = new javax.swing.JMenuItem();
@@ -133,12 +171,19 @@ public class GestionOperario extends javax.swing.JFrame {
 
         jBAgregar.setText("Agregar");
         jBAgregar.setEnabled(false);
+        jBAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBAgregarActionPerformed(evt);
+            }
+        });
 
         jBActualizar.setText("Actualizar");
         jBActualizar.setEnabled(false);
-
-        jBEliminar.setText("Eliminar");
-        jBEliminar.setEnabled(false);
+        jBActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBActualizarActionPerformed(evt);
+            }
+        });
 
         jLabel10.setText("Confirmar ");
 
@@ -149,6 +194,10 @@ public class GestionOperario extends javax.swing.JFrame {
         jLabel3.setText("de usuario:");
 
         jCBTipoOperario.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tipo de Usuario" }));
+
+        jCBActivo.setText("Activo");
+
+        jBCancelar.setText("Cancelar");
 
         jMArchivo.setText("Archivo");
 
@@ -172,14 +221,6 @@ public class GestionOperario extends javax.swing.JFrame {
                 .addGap(12, 12, 12)
                 .addComponent(jSeparator1)
                 .addGap(12, 12, 12))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jBAgregar)
-                .addGap(18, 18, 18)
-                .addComponent(jBActualizar)
-                .addGap(18, 18, 18)
-                .addComponent(jBEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(54, 54, 54))
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -203,33 +244,43 @@ public class GestionOperario extends javax.swing.JFrame {
                         .addGap(0, 12, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jTFPassword, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jTFConfirmPassword, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jTFApellido)
                                 .addComponent(jTFNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
-                                .addComponent(jTFDireccion)))
+                                .addComponent(jTFDireccion))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jTFConfirmPassword, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                                    .addComponent(jTFPassword, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addGap(49, 49, 49)
+                                .addComponent(jCBActivo)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jSeparator2))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTFCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(87, 87, 87)
+                        .addComponent(jBAgregar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jBActualizar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jBCancelar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jBBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jTFCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jBBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jBActualizar, jBAgregar, jBEliminar});
-
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jTFConfirmPassword, jTFPassword});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jBActualizar, jBAgregar, jBCancelar});
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jTFNombreUsuario, jTFTelefono});
 
@@ -266,19 +317,24 @@ public class GestionOperario extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(3, 3, 3)
-                        .addComponent(jLabel3)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(3, 3, 3)
+                                .addComponent(jLabel3)
+                                .addGap(19, 19, 19))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jTFNombreUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jCBTipoOperario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(28, 28, 28)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(jTFPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(19, 19, 19))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTFNombreUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jCBTipoOperario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(28, 28, 28)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(jTFPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19)
+                        .addComponent(jCBActivo)
+                        .addGap(5, 5, 5)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 6, Short.MAX_VALUE)
@@ -291,14 +347,14 @@ public class GestionOperario extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jBActualizar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBAgregar)
-                    .addComponent(jBEliminar))
+                    .addComponent(jBActualizar)
+                    .addComponent(jBCancelar))
                 .addContainerGap())
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jBActualizar, jBAgregar, jBEliminar});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jBActualizar, jBAgregar, jBCancelar});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -328,15 +384,28 @@ public class GestionOperario extends javax.swing.JFrame {
             jTFApellido.setText(operario.getApellido());
             jTFDireccion.setText(operario.getDireccion());
             jTFTelefono.setText(operario.getTelefono());
-            jTFNombreUsuario.setText(operario.getNombre());
-            operario.getOperarioUser().getTipoOperarioUser().getIdTipoOperarioUser();
-            
+            jTFNombreUsuario.setText(operario.getOperarioUser().getNombreUsuarioOperario());
+            int idtipoOperario = operario.getOperarioUser().getTipoOperarioUser().getIdTipoOperarioUser();
+            jCBTipoOperario.setSelectedIndex(idtipoOperario + 1);
+            jCBActivo.setSelected(operario.getOperarioUser().isActivo());
+            habilitarCamposEnExistencia();
+
         } catch (BussinessException | PersistentException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error al Buscar",
                     JOptionPane.ERROR_MESSAGE);
             habilitarCamposSinExistencia();
         }
     }//GEN-LAST:event_jBBuscarActionPerformed
+
+    private void jBActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBActualizarActionPerformed
+        
+    }//GEN-LAST:event_jBActualizarActionPerformed
+
+    private void jBAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAgregarActionPerformed
+        
+        
+        controller= new OperarioController();
+    }//GEN-LAST:event_jBAgregarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -378,7 +447,8 @@ public class GestionOperario extends javax.swing.JFrame {
     private javax.swing.JButton jBActualizar;
     private javax.swing.JButton jBAgregar;
     private javax.swing.JButton jBBuscar;
-    private javax.swing.JButton jBEliminar;
+    private javax.swing.JButton jBCancelar;
+    private javax.swing.JCheckBox jCBActivo;
     private javax.swing.JComboBox jCBTipoOperario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -405,4 +475,6 @@ public class GestionOperario extends javax.swing.JFrame {
     private javax.swing.JPasswordField jTFPassword;
     private javax.swing.JTextField jTFTelefono;
     // End of variables declaration//GEN-END:variables
+
+    
 }

@@ -14,6 +14,9 @@
         <property name="password" type="string">
             <column name="Password" length="100" not-null="true" />
         </property>
+        <property name="activo" type="boolean">
+            <column name="Activo" not-null="true" />
+        </property>
 
     </class>
 </hibernate-mapping>
