@@ -18,7 +18,6 @@ public class Vehiculo  implements java.io.Serializable {
      private String color;
      private String modelo;
      private Date fechaRegistro;
-     private Set usuarioVehiculos = new HashSet(0);
 
     public Vehiculo() {
     }
@@ -31,14 +30,13 @@ public class Vehiculo  implements java.io.Serializable {
         this.modelo = modelo;
         this.fechaRegistro = fechaRegistro;
     }
-    public Vehiculo(String placa, TipoVehiculo tipoVehiculo, String marca, String color, String modelo, Date fechaRegistro, Set usuarioVehiculos) {
+    public Vehiculo(String placa, TipoVehiculo tipoVehiculo, String marca, String color, String modelo, Date fechaRegistro) {
        this.placa = placa;
        this.tipoVehiculo = tipoVehiculo;
        this.marca = marca;
        this.color = color;
        this.modelo = modelo;
        this.fechaRegistro = fechaRegistro;
-       this.usuarioVehiculos = usuarioVehiculos;
     }
    
     public String getPlaca() {
@@ -83,15 +81,7 @@ public class Vehiculo  implements java.io.Serializable {
     public void setFechaRegistro(Date fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
-    public Set getUsuarioVehiculos() {
-        return this.usuarioVehiculos;
-    }
     
-    public void setUsuarioVehiculos(Set usuarioVehiculos) {
-        this.usuarioVehiculos = usuarioVehiculos;
-    }
-
-
 
 
 }

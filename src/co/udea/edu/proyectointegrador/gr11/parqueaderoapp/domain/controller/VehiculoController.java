@@ -23,11 +23,12 @@ import java.util.List;
  * @author davide.gomez
  */
 public class VehiculoController {
-    private final String placa;
-    private final String marca;
-    private final String color;
-    private final String tipoVehiculo;
-    private final String tip;
+    private String placa;
+    private String marca;
+    private String color;
+    private String tipoVehiculo;
+    private String tip;
+    private String modelo;
     UsuarioDao usuarioD;
     Usuario usuario;
     VehiculoDao vehiculoD;
@@ -38,12 +39,16 @@ public class VehiculoController {
     UsuarioVehiculo usuarioVehiculoIngreso;
     UsuarioVehiculoId usuarioVehiculoPk;
 
-    public VehiculoController(String placa, String marca, String color, String tipoVehiculo, String tip) {
+    public VehiculoController() {
+    }
+    
+    public VehiculoController(String placa, String marca, String modelo, String color, String tipoVehiculo, String tip) {
         this.placa = placa;
         this.marca = marca;
         this.color = color;
         this.tipoVehiculo = tipoVehiculo;
         this.tip = tip;
+        this.modelo=modelo;
     }
     
     public void registroVehiculo() throws BussinessException{
@@ -66,7 +71,7 @@ public class VehiculoController {
                 throw new BussinessException("Hubo un error al intentar ingresar el"
                         + " vehiculo, verifique el tipo de vehiculo");
             }
-            vehiculo=new Vehiculo(placa, tipoVehiculoObj, marca, color, new Date());
+            vehiculo=new Vehiculo(placa, tipoVehiculoObj, marca,color, modelo, new Date());
             vehiculoD.insertarVehiculo(vehiculo);
         }else{
             usuarioVehiculoDao=new UsuarioVehiculoDaoImplement();
@@ -79,11 +84,23 @@ public class VehiculoController {
                 }
             }
         }
+        usuarioVehiculoDao=new UsuarioVehiculoDaoImplement();
         usuarioVehiculoPk=new UsuarioVehiculoId(placa, tip);
         usuarioVehiculoIngreso=new UsuarioVehiculo();
         usuarioVehiculoIngreso.setId(usuarioVehiculoPk);
         usuarioVehiculoIngreso.setActivo(true);
         usuarioVehiculoDao.insertarUsuarioVehiculo(usuarioVehiculoIngreso);
+    }
+    
+    public List<TipoVehiculo> getTiposVehiculos() throws BussinessException{
+        List<TipoVehiculo> tipoVehiculos=null;
+        tipoVehiculoDao=new TipoVehiculoDaoImplement();
+        tipoVehiculos=tipoVehiculoDao.getAllTipoVehiculo();
+        if(tipoVehiculos==null){
+            throw new BussinessException("Hubo un error al recuperar los tipos de"
+                    + " vehiculos, contacte al administrador");
+        }
+        return tipoVehiculos;
     }
     
 }

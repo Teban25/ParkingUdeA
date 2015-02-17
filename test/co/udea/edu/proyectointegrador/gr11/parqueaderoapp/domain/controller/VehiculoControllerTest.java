@@ -6,8 +6,6 @@
 package co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.controller;
 
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.exception.BussinessException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -47,9 +45,21 @@ public class VehiculoControllerTest {
     @Test
     public void testRegistroVehiculo(){
         System.out.println("registroVehiculo");
-        VehiculoController instance = new VehiculoController("FKX96","Jailing","Blanca","Motocicleta","1017214");
+        VehiculoController instance = new VehiculoController("GZM21B","AUTECO","2012","Roja","Motocicleta","1017214");
         try {
             instance.registroVehiculo();
+            assert(true);
+        } catch (BussinessException ex) {
+            fail(ex.getMessage());
+        }
+    }
+    
+    @Test
+    public void testgetTiposVehiculos(){
+        System.out.println("getVehiculos");
+        VehiculoController instance=new VehiculoController();
+        try {
+            instance.getTiposVehiculos();
             assert(true);
         } catch (BussinessException ex) {
             fail(ex.getMessage());

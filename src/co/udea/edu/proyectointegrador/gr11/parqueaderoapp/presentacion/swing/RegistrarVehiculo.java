@@ -1,7 +1,14 @@
 
 package co.udea.edu.proyectointegrador.gr11.parqueaderoapp.presentacion.swing;
 
+import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.controller.VehiculoController;
+import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.TipoVehiculo;
+import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.exception.BussinessException;
 import java.awt.Color;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,14 +21,28 @@ public class RegistrarVehiculo extends javax.swing.JFrame {
     private String color;
     private String tipoVehiculo;
     private String tip;
+    private String modelo;
+    VehiculoController vehiculoController;
     
     
     public RegistrarVehiculo() {
         initComponents();
         this.getContentPane().setBackground(new Color(204,204,204));
+        agregarItems(this.jCBTipoVehiculo);
     }
 
-    
+    public void agregarItems(JComboBox caja){
+        vehiculoController=new VehiculoController();
+        try {
+            List<TipoVehiculo> tiposVehiculos=vehiculoController.getTiposVehiculos();
+            for (TipoVehiculo tiposVehiculo : tiposVehiculos) {
+                caja.addItem(tiposVehiculo.getTipoVehiculoDescripcion());
+            }
+        } catch (BussinessException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -62,7 +83,7 @@ public class RegistrarVehiculo extends javax.swing.JFrame {
 
         jLabel6.setText("Tipo de vehiculo:");
 
-        jCBTipoVehiculo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar", "Motocicleta" }));
+        jCBTipoVehiculo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Seleccionar" }));
 
         jLabel7.setFont(new java.awt.Font("Ubuntu", 1, 18)); // NOI18N
         jLabel7.setText("Información del vinculado");
@@ -184,8 +205,18 @@ public class RegistrarVehiculo extends javax.swing.JFrame {
         color=jTFColor.getText();
         tipoVehiculo=jCBTipoVehiculo.getSelectedItem().toString();
         tip=jTFTip.getText();
+        modelo=jTFModelo.getText();
         if((!placa.equals("")) & (!marca.equals("")) & (!color.equals("")) &
                 (!tipoVehiculo.equals("Seleccionar"))& (!tip.equals(""))){
+            vehiculoController=new VehiculoController(placa, marca,modelo, color, tipoVehiculo, tip);
+            JOptionPane.showMessageDialog(null, "Vehiculo registrado correctamente"
+                    + " al usuario ingresado", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+            try {
+                vehiculoController.registroVehiculo();
+            } catch (BussinessException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", 
+                        JOptionPane.ERROR_MESSAGE);
+            }
         }else{
             JOptionPane.showMessageDialog(null, "Falta algún campo por ingresar, "
                     + "por favor verifique", "Atención!", JOptionPane.WARNING_MESSAGE);
