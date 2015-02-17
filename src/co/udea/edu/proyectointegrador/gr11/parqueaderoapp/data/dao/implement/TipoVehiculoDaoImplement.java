@@ -58,12 +58,14 @@ public class TipoVehiculoDaoImplement implements TipoVehiculoDao{
     }
 
     @Override
-    public TipoVehiculo getTipoVehiculo(int idTipoVehiculo) {
+    public TipoVehiculo getTipoVehiculo(String descripcionTipoVehiculo) {
         TipoVehiculo tipoVehi=null;
         try{
             SessionFactory sf=HibernateUtil.getSessionFactory();
             session=sf.openSession();
-            tipoVehi=(TipoVehiculo)session.get(TipoVehiculo.class, idTipoVehiculo);
+            String q="from TipoVehiculo u where u.tipoVehiculoDescripcion=:descripcionTipoVehiculo";
+            tipoVehi=(TipoVehiculo)session.createQuery(q).
+                    setParameter("descripcionTipoVehiculo", descripcionTipoVehiculo).list().get(0);
             session.close();
         }catch(Exception e){
             System.out.println(e.getMessage());

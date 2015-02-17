@@ -21,8 +21,8 @@ public interface TipoVehiculoDao {
     public List<TipoVehiculo> getAllTipoVehiculo();
     /**
      * Retorna un tipo de vehiculo especifico
-     * @param idTipoVehiculo, se refiere al identificador del tipo de vehiculo a retornar
+     * @param descripcionTipoVehiculo, se refiere al identificador del tipo de vehiculo a retornar
      * @return 
      */
-    public TipoVehiculo getTipoVehiculo(int idTipoVehiculo);
+    public TipoVehiculo getTipoVehiculo(String descripcionTipoVehiculo);
 }
