@@ -1,7 +1,10 @@
-
 package co.udea.edu.proyectointegrador.gr11.parqueaderoapp.presentacion.swing;
 
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.controller.InicioSesionController;
+import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.exception.BussinessException;
+import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.exception.PersistentException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -9,14 +12,14 @@ import javax.swing.JOptionPane;
  * @author Teban-Ing
  */
 public class InicioSesion extends javax.swing.JFrame {
+
     private String usuario;
     private String password;
-    
+
     public InicioSesion() {
         initComponents();
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -155,63 +158,67 @@ public class InicioSesion extends javax.swing.JFrame {
     }//GEN-LAST:event_jMISalirActionPerformed
 
     private void jTFUsuarioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTFUsuarioFocusGained
-        if(jTFUsuario.getText().equals("Nombre de usuario")){
+        if (jTFUsuario.getText().equals("Nombre de usuario")) {
             jTFUsuario.setText("");
         }
     }//GEN-LAST:event_jTFUsuarioFocusGained
 
     private void jTFUsuarioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTFUsuarioFocusLost
-        if(jTFUsuario.getText().isEmpty()){
+        if (jTFUsuario.getText().isEmpty()) {
             jTFUsuario.setText("Nombre de usuario");
         }
     }//GEN-LAST:event_jTFUsuarioFocusLost
 
     private void jBIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBIniciarSesionActionPerformed
         int role;
-        usuario=jTFUsuario.getText();
-        password=JPFPassword.getText();
-        if(!usuario.equals("Nombre de usuario")){
-            if(usuario!=null && password!=null){
-               InicioSesionController iniciar=new InicioSesionController(usuario,password);
-               role=iniciar.permitirSesion();
-               if(role==0){
-                   PrincipalAdmin nuevoAdmin=new PrincipalAdmin();
-                   nuevoAdmin.setVisible(true);
-                   this.hide();
-               }
-               if(role==1){
-                   PrincipalCamVigilante nuevaCam=new PrincipalCamVigilante();
-                   nuevaCam.setVisible(true);
-                   this.hide();
-               }
-               if(role==-1){
-                   JOptionPane.showMessageDialog(null, "Por favor verifique su "
-                           + "nombre de usuario o password", "Error al iniciar sesión",
-                           JOptionPane.ERROR_MESSAGE);
-               }
-            }else{
+        usuario = jTFUsuario.getText();
+        password = JPFPassword.getText();
+        if (!usuario.equals("Nombre de usuario")) {
+            if (usuario != null && password != null) {
+                InicioSesionController iniciar = new InicioSesionController(usuario, password);
+                try {
+                    role = iniciar.permitirSesion();
+                    if (role == 0) {
+                        PrincipalAdmin nuevoAdmin = new PrincipalAdmin();
+                        nuevoAdmin.setVisible(true);
+                        this.hide();
+                    }
+                    if (role == 1) {
+                        PrincipalCamVigilante nuevaCam = new PrincipalCamVigilante();
+                        nuevaCam.setVisible(true);
+                        this.hide();
+                    }
+                    if (role == -1) {
+                        JOptionPane.showMessageDialog(null, "Por favor verifique su "
+                                + "nombre de usuario o password", "Error al iniciar sesión",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (PersistentException | BussinessException ex) {
+                    JOptionPane.showMessageDialog(this, ex.getMessage(), 
+                            "Mensaje de error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
                 JOptionPane.showMessageDialog(null, "Ingrese un password", "Error!", JOptionPane.ERROR_MESSAGE);
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Ingrese el nombre usuario", "Error!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jBIniciarSesionActionPerformed
 
     private void JPFPasswordFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JPFPasswordFocusGained
-        if(String.valueOf(JPFPassword.getText()).equals("password")){
+        if (String.valueOf(JPFPassword.getText()).equals("password")) {
             JPFPassword.setText("");
         }
-        
+
     }//GEN-LAST:event_JPFPasswordFocusGained
 
     private void JPFPasswordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JPFPasswordFocusLost
-        if(String.valueOf(JPFPassword.getText()).isEmpty()){
+        if (String.valueOf(JPFPassword.getText()).isEmpty()) {
             JPFPassword.setText("password");
         }
-        
+
     }//GEN-LAST:event_JPFPasswordFocusLost
 
-    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
