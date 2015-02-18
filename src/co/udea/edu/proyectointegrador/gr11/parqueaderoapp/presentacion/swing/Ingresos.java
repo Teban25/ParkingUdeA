@@ -4,10 +4,14 @@ package co.udea.edu.proyectointegrador.gr11.parqueaderoapp.presentacion.swing;
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.controller.IngresoController;
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.Ingreso;
 import java.awt.Color;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 /**
  *
@@ -16,13 +20,17 @@ import javax.swing.table.TableModel;
 public class Ingresos extends javax.swing.JFrame {
     private IngresoController ingresoController;
     List<Ingreso> ingresos;
+    Date fecha;
+    Vector<String[]> fechasFiltradas;
+    String [] fila;
     
     public Ingresos() {
         initComponents();
         this.getContentPane().setBackground(new Color(204,204,204));
-        /*ingresoController=new IngresoController();
-        ingresos=ingresoController.getAllIngresos();*/
-        llenarTabla();
+        fechasFiltradas=new Vector<>();
+        fila=new String[5];
+        ingresoController=new IngresoController();
+        ingresos=ingresoController.getAllIngresos();
     }
     
     @SuppressWarnings("unchecked")
@@ -38,6 +46,7 @@ public class Ingresos extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("SCAS-Administración-Ingresos");
 
         jTIngresos.setModel(new javax.swing.table.DefaultTableModel(
@@ -110,12 +119,11 @@ public class Ingresos extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jLabel1))
-                    .addComponent(jDCFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jDCFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(58, Short.MAX_VALUE))
@@ -124,26 +132,59 @@ public class Ingresos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    public void llenarTabla(){
+    public void llenarTabla(Vector<String[]> v){
         Boolean estado=true;
         DefaultTableModel modelo=(DefaultTableModel) jTIngresos.getModel();
-        String [] datos=new String[5];
-        datos[0]=String.valueOf(new Date());
-        if(estado){
-            datos[1]="Aceptado";
+        /*
+        modelo.addRow();*/
+        int sizeV=v.size();
+        int i=0;
+        while(i<sizeV){
+            modelo.addRow(v.elementAt(i));
+            i++;
         }
-        datos[2]="GZM21B";
-        datos[3]="1017214";
-        datos[4]="test.vigilante";
-        modelo.addRow(datos);
     }
     
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        this.hide();
+        this.dispose();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+        if(jDCFecha.getDate()!=null){
+            try{
+                DateFormat dfa=DateFormat.getDateInstance(DateFormat.SHORT);
+                Date fechaIngreso;
+                String fechaDeIngreso;
+                //Convierto la fecha que se ingreso en el Swing
+                String format=jDCFecha.getDateFormatString();
+                Date date=jDCFecha.getDate();
+                SimpleDateFormat sfd=new SimpleDateFormat(format);
+                String fechaFiltrada=sfd.format(date);
+                //Convierto la fecha que hay en la BD
+                for(Ingreso i: ingresos){
+                    fechaIngreso=i.getId().getFecha();
+                    fechaDeIngreso=dfa.format(fechaIngreso);
+                    if(fechaDeIngreso.equals(fechaFiltrada)){
+                        fila[0]=fechaDeIngreso;
+                        if(i.isEstado()){
+                            fila[1]="Accedido";
+                        }else{
+                            fila[1]="Denegado";
+                        }
+                        fila[2]=i.getId().getPlaca();
+                        fila[3]=i.getId().getUsuarioIdentificacion();
+                        fila[4]=i.getOperarioUser().getNombreUsuarioOperario();
+                        fechasFiltradas.add(fila);
+                    }
+                }
+                llenarTabla(fechasFiltradas);
+            }catch(Exception e){
+                System.out.println(e.getMessage());
+            }
+        }else{
+            JOptionPane.showMessageDialog(this,"Seleccione una fecha por favor",
+                    "Error",JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
    
