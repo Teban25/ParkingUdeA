@@ -177,11 +177,13 @@ public class GestionOperario extends javax.swing.JFrame {
         operario.getOperarioUser().setActivo(jCBActivo.isSelected());
         operario.getOperarioUser().setPassword(password);
         operario.getOperarioUser().setNombreUsuarioOperario(nombreUsuario);
-        tiposOperario.stream().filter((t) -> (((String) jCBTipoOperario.getSelectedItem())
-                .equals(t.getDescripcion()))).forEach((t) -> {
-            operario.getOperarioUser().setTipoOperarioUser(
-                    new TipoOperarioUser(t.getIdTipoOperarioUser(), null));
-        });
+        
+        for (TipoOperarioUser tiposOperario1 : tiposOperario) {
+            if(tiposOperario1.getDescripcion().equals((String)jCBTipoOperario.getSelectedItem())){
+                operario.getOperarioUser().setTipoOperarioUser(
+                    new TipoOperarioUser(tiposOperario1.getIdTipoOperarioUser(), null));
+            }
+        }
     }
 
     @SuppressWarnings("unchecked")

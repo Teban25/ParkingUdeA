@@ -157,7 +157,7 @@ public class InicioSesion extends javax.swing.JFrame {
     private void jBIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBIniciarSesionActionPerformed
         int role;
         usuario = jTFUsuario.getText();
-        password = JPFPassword.getText();
+        password = String.copyValueOf(JPFPassword.getPassword());
         if (!usuario.equals("Nombre de usuario")) {
             if (usuario != null && password != null) {
                 InicioSesionController iniciar = new InicioSesionController(usuario, password);
