@@ -66,9 +66,9 @@ public class GestionOperario extends javax.swing.JFrame {
         controller = new OperarioController();
         try {
             tiposOperario = controller.getTiposOperario();
-            tiposOperario.stream().forEach((tipo) -> {
+            for (TipoOperarioUser tipo : tiposOperario) {
                 caja.addItem(tipo.getDescripcion());
-            });
+            }
         } catch (BussinessException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);
