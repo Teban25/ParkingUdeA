@@ -6,6 +6,7 @@ import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.Operar
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.entities.TipoOperarioUser;
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.exception.BussinessException;
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.exception.PersistentException;
+import java.awt.Color;
 import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -35,6 +36,7 @@ public class GestionOperario extends javax.swing.JFrame {
 
     public GestionOperario() {
         initComponents();
+        this.getContentPane().setBackground(new Color(204,204,204));
         agregarItems(jCBTipoOperario);
     }
 
@@ -221,6 +223,7 @@ public class GestionOperario extends javax.swing.JFrame {
         jMArchivo = new javax.swing.JMenu();
         jMSalir = new javax.swing.JMenuItem();
 
+        setTitle("SCAS-Gestión de operarios");
         setResizable(false);
 
         jBBuscar.setText("Buscar");

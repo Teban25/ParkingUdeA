@@ -67,6 +67,7 @@ public class RegistrarVehiculo extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMISalir = new javax.swing.JMenuItem();
 
+        setTitle("SCAS-Registrar vehiculo");
         setBounds(new java.awt.Rectangle(450, 250, 0, 0));
         setResizable(false);
 

@@ -32,9 +32,12 @@ public class PrincipalAdmin extends javax.swing.JFrame {
         jMIAgregarOperario = new javax.swing.JMenuItem();
         jMIEliminarOperario = new javax.swing.JMenuItem();
         jMIIngresos = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMIAcercaDe = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("SCAS");
+        setTitle("SCAS-Administración");
         setBackground(new java.awt.Color(204, 204, 204));
         setBounds(new java.awt.Rectangle(500, 100, 0, 0));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -97,6 +100,21 @@ public class PrincipalAdmin extends javax.swing.JFrame {
 
         jMBAdmin.add(JMAdmin);
 
+        jMenu1.setText("Ayuda");
+
+        jMenuItem1.setText("Asistencia y documentación");
+        jMenu1.add(jMenuItem1);
+
+        jMIAcercaDe.setText("Acerca de");
+        jMIAcercaDe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIAcercaDeActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMIAcercaDe);
+
+        jMBAdmin.add(jMenu1);
+
         setJMenuBar(jMBAdmin);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -145,6 +163,11 @@ public class PrincipalAdmin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMIEliminarOperarioActionPerformed
 
+    private void jMIAcercaDeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIAcercaDeActionPerformed
+        About nuevo=new About(this, true);
+        nuevo.setVisible(true);
+    }//GEN-LAST:event_jMIAcercaDeActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -187,11 +210,14 @@ public class PrincipalAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel jLBienvenido;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuBar jMBAdmin;
+    private javax.swing.JMenuItem jMIAcercaDe;
     private javax.swing.JMenuItem jMIAgregarOperario;
     private javax.swing.JMenuItem jMICerrarSesion;
     private javax.swing.JMenuItem jMIEliminarOperario;
     private javax.swing.JMenuItem jMIIngresos;
     private javax.swing.JMenuItem jMISalir;
     private javax.swing.JMenu jMOperarios;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuItem jMenuItem1;
     // End of variables declaration//GEN-END:variables
 }

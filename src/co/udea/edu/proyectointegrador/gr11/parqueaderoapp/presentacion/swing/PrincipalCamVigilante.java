@@ -2,6 +2,7 @@
 package co.udea.edu.proyectointegrador.gr11.parqueaderoapp.presentacion.swing;
 
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.controller.AlprController;
+import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.controller.IngresoController;
 import co.udea.edu.proyectointegrador.gr11.parqueaderoapp.domain.exception.BussinessException;
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamLock;
@@ -12,6 +13,7 @@ import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -28,6 +30,7 @@ public class PrincipalCamVigilante extends javax.swing.JFrame {
     Webcam webcam;
     WebcamPanel panel;
     String tip;
+    String operario;
     JLabel lFotoPlaca;
     ImageIcon icon;
     Icon icono;
@@ -36,9 +39,11 @@ public class PrincipalCamVigilante extends javax.swing.JFrame {
     String resultado;
     private final String mensajeResultadoPositivo="Concedido";
     private final String mensajeResultadoNegativo="Denegado";
+    IngresoController ingresos;
     
     public PrincipalCamVigilante() {
         initComponents();
+        operario=InicioSesion.usuario;
         this.getContentPane().setBackground(new Color(204,204,204));
         webcam = Webcam.getDefault();
         if (webcam==null) {
@@ -87,8 +92,12 @@ public class PrincipalCamVigilante extends javax.swing.JFrame {
         jMISalir = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMIRegistrarVehiculo = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMIAcercaDe = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("SCAS-Vigilancia");
         setBounds(new java.awt.Rectangle(350, 0, 0, 0));
         setResizable(false);
 
@@ -202,6 +211,21 @@ public class PrincipalCamVigilante extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
+        jMenu3.setText("Ayuda");
+
+        jMenuItem2.setText("Asistencia y documentación");
+        jMenu3.add(jMenuItem2);
+
+        jMIAcercaDe.setText("Acerca de");
+        jMIAcercaDe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIAcercaDeActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMIAcercaDe);
+
+        jMenuBar1.add(jMenu3);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -224,9 +248,10 @@ public class PrincipalCamVigilante extends javax.swing.JFrame {
                         .addGap(0, 10, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTFResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel1)
-                                .addComponent(JBEntrada)))
+                            .addComponent(JBEntrada)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addComponent(jLabel1)))
                         .addGap(21, 21, 21)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
@@ -320,6 +345,11 @@ public class PrincipalCamVigilante extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTFTipKeyPressed
 
+    private void jMIAcercaDeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIAcercaDeActionPerformed
+        About nuevo=new About(this, true);
+        nuevo.setVisible(true);
+    }//GEN-LAST:event_jMIAcercaDeActionPerformed
+
     
     private void actionTipedTIP(){
          tip=jTFTip.getText();
@@ -339,12 +369,14 @@ public class PrincipalCamVigilante extends javax.swing.JFrame {
             lFotoPlaca.setVisible(true);
             jPFotoPlaca.setSize(340,280);
             jPFotoPlaca.add(lFotoPlaca);
+            
             controladorAlpr=new AlprController(rutaPlaca);
             try {
                resultado=controladorAlpr.recognizePlateFromUser(tip);
                 jTFPlacaResult.setText(resultado);
                 jTFResultado.setForeground(new Color(85, 168, 73));
                 jTFResultado.setText(mensajeResultadoPositivo);
+                ingresos=new IngresoController(new Date(), true, resultado, tip, operario);
             } catch (BussinessException ex) {
                 jTFResultado.setSelectedTextColor(Color.red);
                 jTFResultado.setText(mensajeResultadoNegativo);
@@ -400,11 +432,14 @@ public class PrincipalCamVigilante extends javax.swing.JFrame {
     private javax.swing.JLabel jLPlacaResult;
     private javax.swing.JLabel jLTip;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenuItem jMIAcercaDe;
     private javax.swing.JMenuItem jMIRegistrarVehiculo;
     private javax.swing.JMenuItem jMISalir;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPFotoPlaca;
     private javax.swing.JPanel jPanelCamara;
     private javax.swing.JTextField jTFPlacaResult;
