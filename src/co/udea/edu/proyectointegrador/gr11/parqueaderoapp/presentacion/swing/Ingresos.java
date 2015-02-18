@@ -133,10 +133,7 @@ public class Ingresos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     
     public void llenarTabla(Vector<String[]> v){
-        Boolean estado=true;
         DefaultTableModel modelo=(DefaultTableModel) jTIngresos.getModel();
-        /*
-        modelo.addRow();*/
         int sizeV=v.size();
         int i=0;
         while(i<sizeV){
