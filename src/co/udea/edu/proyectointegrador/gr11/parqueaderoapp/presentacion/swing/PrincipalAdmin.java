@@ -28,9 +28,7 @@ public class PrincipalAdmin extends javax.swing.JFrame {
         jMICerrarSesion = new javax.swing.JMenuItem();
         jMISalir = new javax.swing.JMenuItem();
         JMAdmin = new javax.swing.JMenu();
-        jMOperarios = new javax.swing.JMenu();
         jMIAgregarOperario = new javax.swing.JMenuItem();
-        jMIEliminarOperario = new javax.swing.JMenuItem();
         jMIIngresos = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -76,23 +74,14 @@ public class PrincipalAdmin extends javax.swing.JFrame {
 
         JMAdmin.setText("Administración");
 
-        jMOperarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/vigilante.png"))); // NOI18N
-        jMOperarios.setText("Operarios");
-
         jMIAgregarOperario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/addUser.png"))); // NOI18N
-        jMIAgregarOperario.setText("Agregar operario");
-        jMOperarios.add(jMIAgregarOperario);
-
-        jMIEliminarOperario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/removeUser.png"))); // NOI18N
-        jMIEliminarOperario.setText("Eliminar operario");
-        jMIEliminarOperario.addActionListener(new java.awt.event.ActionListener() {
+        jMIAgregarOperario.setText("Gestion de operarios");
+        jMIAgregarOperario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMIEliminarOperarioActionPerformed(evt);
+                jMIAgregarOperarioActionPerformed(evt);
             }
         });
-        jMOperarios.add(jMIEliminarOperario);
-
-        JMAdmin.add(jMOperarios);
+        JMAdmin.add(jMIAgregarOperario);
 
         jMIIngresos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/estadisticas.png"))); // NOI18N
         jMIIngresos.setText("Ingresos");
@@ -159,14 +148,15 @@ public class PrincipalAdmin extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jMISalirActionPerformed
 
-    private void jMIEliminarOperarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIEliminarOperarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMIEliminarOperarioActionPerformed
-
     private void jMIAcercaDeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIAcercaDeActionPerformed
         About nuevo=new About(this, true);
         nuevo.setVisible(true);
     }//GEN-LAST:event_jMIAcercaDeActionPerformed
+
+    private void jMIAgregarOperarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIAgregarOperarioActionPerformed
+        GestionOperario nuevaGestion=new GestionOperario();
+        nuevaGestion.setVisible(true);
+    }//GEN-LAST:event_jMIAgregarOperarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -213,10 +203,8 @@ public class PrincipalAdmin extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMIAcercaDe;
     private javax.swing.JMenuItem jMIAgregarOperario;
     private javax.swing.JMenuItem jMICerrarSesion;
-    private javax.swing.JMenuItem jMIEliminarOperario;
     private javax.swing.JMenuItem jMIIngresos;
     private javax.swing.JMenuItem jMISalir;
-    private javax.swing.JMenu jMOperarios;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
     // End of variables declaration//GEN-END:variables
